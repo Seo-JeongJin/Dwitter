@@ -26,7 +26,7 @@ const Tweets = memo(({ tweetService, username, addable }) => {
     tweetService
       .deleteTweet(tweetId)
       .then(() =>
-        setTweets((tweets) => tweets.filter((tweet) => tweet.id !== tweetId))
+        setTweets((tweets) => tweets.filter((tweet) => tweet.id !== tweetId)),
       )
       .catch((error) => setError(error.toString()));
 
@@ -35,8 +35,8 @@ const Tweets = memo(({ tweetService, username, addable }) => {
       .updateTweet(tweetId, text)
       .then((updated) =>
         setTweets((tweets) =>
-          tweets.map((item) => (item.id === updated.id ? updated : item))
-        )
+          tweets.map((item) => (item.id === updated.id ? updated : item)),
+        ),
       )
       .catch((error) => error.toString());
 
@@ -59,8 +59,8 @@ const Tweets = memo(({ tweetService, username, addable }) => {
         />
       )}
       {error && <Banner text={error} isAlert={true} transient={true} />}
-      {tweets.length === 0 && <p className='tweets-empty'>No Tweets Yet</p>}
-      <ul className='tweets'>
+      {tweets.length === 0 && <p className="tweets-empty">No Tweets Yet</p>}
+      <ul className="tweets">
         {tweets.map((tweet) => (
           <TweetCard
             key={tweet.id}
