@@ -4,6 +4,7 @@ import morgan from 'morgan'; // HTTP 요청 로깅을 위한 미들웨어
 import helmet from 'helmet'; // 공통적인 보안 헤더 설정을 통해 앱을 보호하는 미들웨어
 import 'express-async-errors'; // 비동기 에러 처리를 간편하게 해주는 라이브러리
 import tweetRouter from './router/tweet.js'; // 트윗 관련 라우터 임포트
+import authRouter from './router/auth.js';
 
 const app = express(); // Express 애플리케이션 객체 생성
 
@@ -15,6 +16,7 @@ app.use(morgan('tiny')); // 터미널에 최소한의 정보로 요청 로그를
 
 // --- 라우팅 설정 ---
 app.use('/tweets', tweetRouter); // '/tweets'로 시작하는 모든 요청은 tweetRouter에서 처리
+app.use('/auth', authRouter);
 
 // --- 에러 처리 설정 ---
 // 1. 요청한 페이지나 경로가 없을 때 (404 Not Found)
