@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'; // JWT(JSON Web Token)를 검증하고 해독하기 위한 라이브러리
 import * as userRepository from '../data/auth.js'; // DB(또는 메모리)에서 사용자 정보를 찾기 위한 저장소 모듈을 가져옴
+import { config } from '../config.js';
 
 // 인증 실패 시 클라이언트에게 일관되게 보내줄 에러 메시지 객체를 미리 정의
 const AUTH_ERROR = { message: 'Authentication Error' };
@@ -22,7 +23,8 @@ export const isAuth = async (req, res, next) => {
   // 4. jsonwebtoken 라이브러리를 사용해 추출한 토큰이 진짜 우리가 발급한 게 맞는지, 유효기간이 안 지났는지 검증
   jwt.verify(
     token,
-    'F2dN7x8HVzBWaQuEEDnhsvHXRWqAR63z', // 우리가 토큰을 만들 때 사용했던 비밀키(Secret Key)
+    // 'F2dN7x8HVzBWaQ uEEDnhsvHXRWqAR63z', // 우리가 토큰을 만들 때 사용했던 비밀키(Secret Key) -> config.js 로 설정된 것 불러오기
+    config.jwt.secretKey,
     async (error, decoded) => {
       // 4-1. 토큰이 조작되었거나 만료되어서 에러가 발생했다면?
       if (error) {
