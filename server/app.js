@@ -6,6 +6,7 @@ import 'express-async-errors'; // 비동기 에러 처리를 간편하게 해주
 import tweetRouter from './router/tweet.js'; // 트윗 관련 라우터 임포트
 import authRouter from './router/auth.js';
 import { config } from './config.js';
+import { initSocket } from './connection/socket.js';
 
 const app = express(); // Express 애플리케이션 객체 생성
 
@@ -32,4 +33,7 @@ app.use((error, req, res, next) => {
 });
 
 // 서버 실행
-app.listen(config.host.port); // config.js 에 설정된 것을 참조
+// app.listen(config.host.port); // config.js 에 설정된 것을 참조
+
+const server = app.listen(config.host.port);
+initSocket(server);

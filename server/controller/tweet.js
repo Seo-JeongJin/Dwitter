@@ -1,4 +1,5 @@
 import * as tweetRepository from '../data/tweet.js'; // 데이터 처리 담당 레이어 임포트
+import { getSocketIO } from '../connection/socket.js';
 
 // 모든 트윗 혹은 특정 사용자 트윗 가져오기
 export async function getTweets(req, res) {
@@ -30,6 +31,7 @@ export async function createTweet(req, res, next) {
   // 트윗을 만들 때, 누가 작성했는지 알기 위해 isAuth 미들웨어가 꽂아준 req.userId를 함께 넘김
   const tweet = await tweetRepository.create(text, req.userId);
   res.status(201).json(tweet); // 데이터가 새로 생성되었으므로 201 상태 코드를 보냄
+  getSocketIO().emit('tweets', tweet);
 }
 
 // 트윗 수정하기
