@@ -9,6 +9,7 @@ import { AuthProvider } from './context/AuthContext';
 import { AuthErrorEventBus } from './context/AuthContext';
 import HttpClient from './network/http';
 import TokenStorage from './db/token'; // 🌟 새로 추가됨: 브라우저에 토큰을 저장하고 읽어오는 역할을 담당하는 클래스
+import Socket from './network/socket'; // 🌟 새로 추가됨: 소켓 연결을 관리하는 클래스
 
 // 환경 변수에서 백엔드 서버의 주소를 가져오기
 const baseURL = process.env.REACT_APP_BASE_URL;
@@ -21,7 +22,8 @@ const authErrorEventBus = new AuthErrorEventBus(); // 인증 에러 발생 시 �
 // 2. 서비스 객체들을 생성할 때, 앞서 만든 도구들을 '부품처럼 끼워 넣어(주입)' 줌
 // 이제 authService와 tweetService는 내부적으로 tokenStorage를 사용해 안전하게 토큰을 꺼내 쓸 수 있게 됨
 const authService = new AuthService(httpClient, tokenStorage);
-const tweetService = new TweetService(httpClient, tokenStorage);
+const socketClient = new Socket(baseURL, () => tokenStorage.getToken()); // 소켓 클라이언트 객체 생성, 토큰 저장소도 전달하여 인증된 연결을 할 수 있게 함
+const tweetService = new TweetService(httpClient, tokenStorage, socketClient);
 
 // 3. 만들어진 도구와 서비스들을 리액트 앱의 최상단에 제공하며 렌더링을 시작
 ReactDOM.render(

@@ -1,7 +1,8 @@
 export default class TweetService {
-  constructor(http, tokenStorage) {
+  constructor(http, tokenStorage, socket) {
     this.http = http;
     this.tokenStorage = tokenStorage;
+    this.socket = socket;
   }
 
   // 트윗 목록을 조회
@@ -49,5 +50,9 @@ export default class TweetService {
     return {
       Authorization: `Bearer ${token}`, // Authorization 헤더 객체를 만들어 반환
     };
+  }
+
+  onSync(callback) {
+    return this.socket.onSync('tweets', callback);
   }
 }

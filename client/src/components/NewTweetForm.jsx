@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const NewTweetForm = ({ tweetService, onError, onCreated }) => {
+const NewTweetForm = ({ tweetService, onError }) => {
   const [tweet, setTweet] = useState('');
 
   const onSubmit = async (event) => {
@@ -9,7 +9,6 @@ const NewTweetForm = ({ tweetService, onError, onCreated }) => {
       .postTweet(tweet)
       .then((created) => {
         setTweet('');
-        onCreated(created);
       })
       .catch(onError);
   };
@@ -19,17 +18,17 @@ const NewTweetForm = ({ tweetService, onError, onCreated }) => {
   };
 
   return (
-    <form className='tweet-form' onSubmit={onSubmit}>
+    <form className="tweet-form" onSubmit={onSubmit}>
       <input
-        type='text'
-        placeholder='Edit your tweet'
+        type="text"
+        placeholder="Edit your tweet"
         value={tweet}
         required
         autoFocus
         onChange={onChange}
-        className='form-input tweet-input'
+        className="form-input tweet-input"
       />
-      <button type='submit' className='form-btn'>
+      <button type="submit" className="form-btn">
         Post
       </button>
     </form>
