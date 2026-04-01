@@ -1,7 +1,7 @@
 {
   "name": "dwitter",
   "version": "1.0.0",
-  "description": "twitter clone coding - simple version",
+  "description": "",
   "main": "app.js",
   "type": "module",
   "scripts": {
