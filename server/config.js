@@ -34,4 +34,10 @@ export const config = {
     // 서버가 실행될 포트 번호. 환경변수가 없으면 기본으로 8080 포트를 사용하도록 설정
     port: parseInt(required('HOST_PORT', 8080)),
   },
+  db: {
+    host: required('DB_HOST'),
+    user: required('DB_USER'),
+    database: required('DB_DATABASE'),
+    password: required('DB_PASSWORD'),
+  },
 };
