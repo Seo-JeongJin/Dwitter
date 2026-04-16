@@ -1,25 +1,25 @@
-import { Switch, Route, useHistory } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import AllTweets from './pages/AllTweets';
 import MyTweets from './pages/MyTweets';
 import { useAuth } from './context/AuthContext';
 
 function App({ tweetService }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
 
   const onAllTweets = () => {
-    history.push('/');
+    navigate('/');
   };
 
   const onMyTweets = () => {
-    history.push(`/${user.username}`);
+    navigate(`/${user.username}`);
   };
 
   const onLogout = () => {
     if (window.confirm('Do you want to log out?')) {
       logout();
-      history.push('/');
+      navigate('/');
     }
   };
 
@@ -31,18 +31,10 @@ function App({ tweetService }) {
         onAllTweets={onAllTweets}
         onMyTweets={onMyTweets}
       />
-      <Switch>
-        (
-        <>
-          <Route exact path='/'>
-            <AllTweets tweetService={tweetService} />
-          </Route>
-          <Route exact path='/:username'>
-            <MyTweets tweetService={tweetService} />
-          </Route>
-        </>
-        )
-      </Switch>
+      <Routes>
+        <Route path='/' element={<AllTweets tweetService={tweetService} />} />
+        <Route path='/:username' element={<MyTweets tweetService={tweetService} />} />
+      </Routes>
     </div>
   );
 }

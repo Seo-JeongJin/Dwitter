@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Banner from './Banner';
 import NewTweetForm from './NewTweetForm';
 import TweetCard from './TweetCard';
@@ -8,7 +8,7 @@ import { useAuth } from '../context/AuthContext';
 const Tweets = memo(({ tweetService, username, addable }) => {
   const [tweets, setTweets] = useState([]);
   const [error, setError] = useState('');
-  const history = useHistory();
+  const navigate = useNavigate();
   const { user } = useAuth();
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const Tweets = memo(({ tweetService, username, addable }) => {
       )
       .catch((error) => error.toString());
 
-  const onUsernameClick = (tweet) => history.push(`/${tweet.username}`);
+  const onUsernameClick = (tweet) => navigate(`/${tweet.username}`);
 
   const onError = (error) => {
     setError(error.toString());
