@@ -1,5 +1,4 @@
 import express from 'express';
-import 'express-async-errors';
 import { body } from 'express-validator';
 import * as tweetController from '../controller/tweet.js';
 import { isAuth } from '../middleware/auth.js'; // 트윗 조작 전에 사용자의 로그인 여부를 확인하기 위해 가져옴

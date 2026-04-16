@@ -2,7 +2,6 @@ import express from 'express'; // Express 프레임워크 임포트
 import cors from 'cors'; // Cross-Origin Resource Sharing(CORS) 설정을 위한 미들웨어
 import morgan from 'morgan'; // HTTP 요청 로깅을 위한 미들웨어
 import helmet from 'helmet'; // 공통적인 보안 헤더 설정을 통해 앱을 보호하는 미들웨어
-import 'express-async-errors'; // 비동기 에러 처리를 간편하게 해주는 라이브러리
 import tweetRouter from './router/tweet.js'; // 트윗 관련 라우터 임포트
 import authRouter from './router/auth.js';
 import { config } from './config.js';

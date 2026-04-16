@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken'; // 로그인 상태를 증명할 JWT 토큰을 만들 때 사용
 import bcrypt from 'bcrypt'; // 사용자의 비밀번호를 안전하게 암호화(해싱)하는 라이브러리
-import {} from 'express-async-errors'; // 비동기 에러 처리를 도움
 import * as userRepository from '../data/auth.js'; // DB 접근 로직이 담긴 레포지토리를 가져옴
 import { config } from '../config.js';
 

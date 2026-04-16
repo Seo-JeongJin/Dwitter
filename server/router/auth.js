@@ -1,5 +1,4 @@
 import express from 'express';
-import {} from 'express-async-errors'; // 비동기 에러를 자동으로 잡아주기 위한 모듈
 import { body } from 'express-validator'; // 클라이언트가 보낸 요청의 'body' 데이터를 검증하기 위한 함수
 import { validate } from '../middleware/validator.js'; // express-validator의 에러 결과를 최종적으로 확인하고 응답을 보내는 커스텀 미들웨어
 import * as authController from '../controller/auth.js'; // 실제 회원가입, 로그인 등의 비즈니스 로직이 들어있는 컨트롤러
