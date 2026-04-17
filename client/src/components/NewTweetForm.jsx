@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const NewTweetForm = ({ tweetService, onError }) => {
   const [tweet, setTweet] = useState('');
