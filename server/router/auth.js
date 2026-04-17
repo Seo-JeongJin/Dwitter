@@ -22,13 +22,8 @@ const validateCredential = [
 // 회원가입 시에만 추가로 필요한 정보들을 검증하는 미들웨어 배열
 const validateSignup = [
   ...validateCredential, // 위에 만들어둔 아이디/비밀번호 검증 로직을 전개 구문(...)으로 그대로 가져와 재사용
-  body('name').notEmpty().withMessage('name is missing'), // 'name' 필드가 비어있으면 에러를 발생시킴
-  body('email').isEmail().normalizeEmail().withMessage('invalid email'), // 이메일 형식인지 확인하고, 대소문자 등을 표준화(normalize) 처리
-  body('url')
-    .isURL() // URL 형식인지 확인
-    .withMessage('invalid URL')
-    .optional({ nullable: true, checkFalsy: true }), // optional: 필수가 아닌 선택 항목으로 지정. (null이거나 빈 문자열이어도 검증을 통과시킴)
-  validate, // 위 과정에서 모인 에러들을 최종 검사하여 처리
+  body('name').notEmpty().withMessage('name is missing'),
+  validate,
 ];
 
 // POST /signup 라우트: 회원가입 요청이 오면 -> validateSignup을 거쳐 데이터가 안전한지 확인하고 -> 안전하면 authController.signup을 실행

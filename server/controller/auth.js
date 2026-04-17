@@ -10,7 +10,7 @@ import { config } from '../config.js';
 
 // 회원가입 처리를 담당하는 함수
 export async function signup(req, res) {
-  const { username, password, name, email, url } = req.body; // 클라이언트가 보낸 폼 데이터를 구조분해할당으로 꺼냄
+  const { username, password, name } = req.body; // 클라이언트가 보낸 폼 데이터를 구조분해할당으로 꺼냄
 
   // 1. 이미 존재하는 아이디인지 확인
   const found = await userRepository.findByUsername(username);
@@ -24,10 +24,8 @@ export async function signup(req, res) {
   // 3. 암호화된 비밀번호를 포함하여 새로운 유저를 DB에 생성
   const userId = await userRepository.createUser({
     username,
-    password: hashed, // 원본 password 대신 해싱된 값을 넣음
+    password: hashed,
     name,
-    email,
-    url,
   });
 
   // 4. 가입 성공과 동시에 로그인 상태를 만들어주기 위해 JWT 토큰을 발급

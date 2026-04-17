@@ -24,11 +24,6 @@ export const User = sequelize.define(
       type: DataType.STRING(128),
       allowNull: false,
     },
-    email: {
-      type: DataType.STRING(128),
-      allowNull: false,
-    },
-    url: DataType.TEXT,
   },
   { timestamps: false },
 );
