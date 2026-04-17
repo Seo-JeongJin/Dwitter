@@ -6,15 +6,13 @@ const Login = ({ onSignUp, onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [url, setURL] = useState('');
   const [text, setText] = useState('');
   const [isAlert, setIsAlert] = useState(false);
 
   const onSubmit = (event) => {
     event.preventDefault();
     if (signup) {
-      onSignUp(username, password, name, email, url).catch(setError);
+      onSignUp(username, password, name).catch(setError);
     } else {
       onLogin(username, password).catch(setError);
     }
@@ -36,10 +34,6 @@ const Login = ({ onSignUp, onLogin }) => {
         return setPassword(value);
       case 'name':
         return setName(value);
-      case 'email':
-        return setEmail(value);
-      case 'url':
-        return setURL(value);
       case 'signup':
         return setSignup(checked);
       default:
@@ -76,27 +70,6 @@ const Login = ({ onSignUp, onLogin }) => {
             onChange={onChange}
             className='form-input'
             required
-          />
-        )}
-        {signup && (
-          <input
-            name='email'
-            type='email'
-            placeholder='Email'
-            value={email}
-            onChange={onChange}
-            className='form-input'
-            required
-          />
-        )}
-        {signup && (
-          <input
-            name='url'
-            type='url'
-            placeholder='Profile Image URL'
-            value={url}
-            onChange={onChange}
-            className='form-input'
           />
         )}
         <div className='form-signup'>

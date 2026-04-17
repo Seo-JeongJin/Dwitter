@@ -6,17 +6,10 @@ export default class AuthService {
   }
 
   // 회원가입 요청을 처리
-  async signup(username, password, name, email, url) {
-    // 1. http 객체를 사용해 '/auth/signup' 경로로 POST 요청
+  async signup(username, password, name) {
     const data = await this.http.fetch('/auth/signup', {
       method: 'POST',
-      body: JSON.stringify({
-        username,
-        password,
-        name,
-        email,
-        url,
-      }),
+      body: JSON.stringify({ username, password, name }),
     });
     // 2. 서버가 응답으로 준 데이터 안에 있는 토큰을 tokenStorage를 이용해 브라우저에 저장
     this.tokenStorage.saveToken(data.token);

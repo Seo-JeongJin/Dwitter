@@ -1,27 +1,27 @@
-import React, { memo, useState } from 'react';
+import { memo, useState } from 'react';
 import parseDate from '../util/date';
 import Avatar from './Avatar';
 import EditTweetForm from './EditTweetForm';
 
 const TweetCard = memo(
   ({ tweet, owner, onDelete, onUpdate, onUsernameClick }) => {
-    const { id, username, name, url, text, createdAt } = tweet;
+    const { id, username, name, text, createdAt } = tweet;
     const [editing, setEditing] = useState(false);
     const onClose = () => setEditing(false);
 
     return (
-      <li className='tweet'>
-        <section className='tweet-container'>
-          <Avatar url={url} name={name} />
-          <div className='tweet-body'>
-            <span className='tweet-name'>{name}</span>
+      <li className="tweet">
+        <section className="tweet-container">
+          <Avatar name={name} />
+          <div className="tweet-body">
+            <span className="tweet-name">{name}</span>
             <span
-              className='tweet-username'
+              className="tweet-username"
               onClick={() => onUsernameClick(tweet)}
             >
               @{username}
             </span>
-            <span className='tweet-date'> · {parseDate(createdAt)}</span>
+            <span className="tweet-date"> · {parseDate(createdAt)}</span>
             <p>{text}</p>
             {editing && (
               <EditTweetForm
@@ -33,12 +33,12 @@ const TweetCard = memo(
           </div>
         </section>
         {owner && (
-          <div className='tweet-action'>
-            <button className='tweet-action-btn' onClick={() => onDelete(id)}>
+          <div className="tweet-action">
+            <button className="tweet-action-btn" onClick={() => onDelete(id)}>
               x
             </button>
             <button
-              className='tweet-action-btn'
+              className="tweet-action-btn"
               onClick={() => setEditing(true)}
             >
               ✎
@@ -47,6 +47,6 @@ const TweetCard = memo(
         )}
       </li>
     );
-  }
+  },
 );
 export default TweetCard;
