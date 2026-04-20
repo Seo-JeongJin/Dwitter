@@ -45,12 +45,74 @@ button {
 
 .app {
   width: 100vw;
-  max-width: 500px;
+  max-width: 900px;
   height: 100vh;
   background-color: var(--color-white);
   display: flex;
   flex-direction: column;
   box-shadow: 0 5px 30px 0 rgb(0 0 0 / 20%), 0 5px 20px 0 rgb(0 0 0 / 19%);
+}
+
+.app-login {
+  max-width: 500px;
+}
+
+.app-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 180px;
+  min-width: 180px;
+  background-color: var(--color-darkBlue);
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  border-right: 1px solid var(--color-grey);
+}
+
+.sidebar-item {
+  padding: 10px 16px;
+  color: var(--color-white);
+  text-decoration: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.sidebar-item:hover,
+.sidebar-item.active {
+  background-color: var(--color-blue);
+}
+
+.sidebar-divider {
+  height: 1px;
+  background-color: var(--color-grey);
+  margin: 8px 0;
+  opacity: 0.3;
+}
+
+.main-content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.tweets-scroll {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-blue) var(--color-darkGrey);
+}
+
+.tweets-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tweets-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--color-blue);
 }
 
 .header {
@@ -79,18 +141,27 @@ button {
 }
 
 .logo-user {
-  font-size: 0.7rem;
+  font-size: 1rem;
   color: var(--color-blue);
-  padding-top: 8px;
 }
 
 .menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   color: var(--color-white);
+}
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .menu-item {
   color: var(--color-white);
   font-weight: bold;
+  font-size: 1rem;
 }
 
 .banner {
@@ -144,26 +215,18 @@ button {
 }
 
 .tweets {
-  height: 100%;
-  overflow-y: auto;
   color: var(--color-black);
   padding: 16px;
   list-style: none;
-  /* Firefox */
-  scrollbar-width: 6px;
-  scrollbar-color: var(--color-darkGrey);
-  scrollbar-face-color: var(--color-blue);
+  margin: 0;
 }
 
-.tweets::-webkit-scrollbar {
-  /* Safari and Chrome */
-  background-color: var(--color-darkGrey);
-  width: 6px;
-}
-
-.tweets::-webkit-scrollbar-thumb {
-  /* Safari and Chrome */
-  background-color: var(--color-blue);
+.tweets-loading {
+  list-style: none;
+  text-align: center;
+  color: var(--color-darkGrey);
+  padding: 16px;
+  font-size: 0.9rem;
 }
 
 .tweets-empty {
@@ -206,6 +269,7 @@ button {
   font-size: 1.5rem;
   font-weight: bold;
   line-height: var(--size-avatar);
+  color: var(--color-black);
 }
 .tweet-body {
   margin: 0px 8px;

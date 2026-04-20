@@ -65,7 +65,7 @@ export function AuthProvider({ authService, authErrorEventBus, children }) {
       {user ? (
         children
       ) : (
-        <div className='app'>
+        <div className='app app-login'>
           <Header />
           <Login onSignUp={signUp} onLogin={logIn} />
         </div>
