@@ -3,13 +3,14 @@ import { getSocketIO } from '../connection/socket.js';
 
 // 모든 트윗 혹은 특정 사용자 트윗 가져오기
 export async function getTweets(req, res) {
-  const username = req.query.username; // URL의 ?username=xxx 부분에서 값을 추출
+  const { username, channel } = req.query;
+  const limit = Math.max(1, parseInt(req.query.limit, 10) || 20);
+  const offset = Math.max(0, parseInt(req.query.offset, 10) || 0);
 
-  // 삼항 연산자를 사용해 쿼리에 이름이 있으면 필터링 함수를, 없으면 전체 조회 함수를 호출
   const data = await (username
-    ? tweetRepository.getAllByUsername(username)
-    : tweetRepository.getAll());
-  res.status(200).json(data); // 성공(200) 응답과 함께 데이터 전송
+    ? tweetRepository.getAllByUsername(username, limit, offset)
+    : tweetRepository.getAll(channel, limit, offset));
+  res.status(200).json(data);
 }
 
 // 특정 ID의 트윗 하나 가져오기
@@ -26,10 +27,8 @@ export async function getTweet(req, res, next) {
 
 // 새로운 트윗 생성하기
 export async function createTweet(req, res, next) {
-  const { text } = req.body; // 클라이언트가 보낸 내용(text)을 가져옴
-
-  // 트윗을 만들 때, 누가 작성했는지 알기 위해 isAuth 미들웨어가 꽂아준 req.userId를 함께 넘김
-  const tweet = await tweetRepository.create(text, req.userId);
+  const { text, channel } = req.body;
+  const tweet = await tweetRepository.create(text, req.userId, channel || 'general');
   res.status(201).json(tweet); // 데이터가 새로 생성되었으므로 201 상태 코드를 보냄
   getSocketIO().emit('tweets', tweet);
 }
