@@ -8,15 +8,15 @@ export async function getTweets(req, res) {
   const offset = Math.max(0, parseInt(req.query.offset, 10) || 0);
 
   const data = await (username
-    ? tweetRepository.getAllByUsername(username, limit, offset)
-    : tweetRepository.getAll(channel, limit, offset));
+    ? tweetRepository.getAllByUsername(username, limit, offset, req.userId)
+    : tweetRepository.getAll(channel, limit, offset, req.userId));
   res.status(200).json(data);
 }
 
 // 특정 ID의 트윗 하나 가져오기
 export async function getTweet(req, res, next) {
   const id = req.params.id; // URL 경로의 /tweets/:id 에서 id 값을 추출
-  const tweet = await tweetRepository.getById(id);
+  const tweet = await tweetRepository.getById(id, req.userId);
 
   if (tweet) {
     res.status(200).json(tweet); // 트윗이 존재하면 응답

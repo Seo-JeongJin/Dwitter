@@ -1,42 +1,47 @@
 import { db } from '../db/database.js';
 
-const SELECT_JOIN = `
+const buildQuery = (userId, where = '') => `
   SELECT tw.id, tw.text, tw.createdAt, tw.userId, tw.channel,
-         u.name, u.username
+         u.name, u.username,
+         COUNT(l.id) AS likeCount,
+         EXISTS(SELECT 1 FROM likes WHERE userId=${parseInt(userId) || 0} AND tweetId=tw.id) AS isLiked
   FROM tweets tw
   JOIN users u ON tw.userId = u.id
+  LEFT JOIN likes l ON l.tweetId = tw.id
+  ${where}
+  GROUP BY tw.id, tw.text, tw.createdAt, tw.userId, tw.channel, u.name, u.username
 `;
 
-export async function getAll(channel, limit, offset) {
+export async function getAll(channel, limit, offset, userId) {
   const lim = parseInt(limit) || 20;
   const off = parseInt(offset) || 0;
   if (channel) {
     return db
       .execute(
-        `${SELECT_JOIN} WHERE tw.channel=? ORDER BY tw.createdAt DESC LIMIT ${lim} OFFSET ${off}`,
+        `${buildQuery(userId, 'WHERE tw.channel=?')} ORDER BY tw.createdAt DESC LIMIT ${lim} OFFSET ${off}`,
         [channel],
       )
       .then(([rows]) => rows);
   }
   return db
-    .execute(`${SELECT_JOIN} ORDER BY tw.createdAt DESC LIMIT ${lim} OFFSET ${off}`)
+    .execute(`${buildQuery(userId)} ORDER BY tw.createdAt DESC LIMIT ${lim} OFFSET ${off}`)
     .then(([rows]) => rows);
 }
 
-export async function getAllByUsername(username, limit, offset) {
+export async function getAllByUsername(username, limit, offset, userId) {
   const lim = parseInt(limit) || 20;
   const off = parseInt(offset) || 0;
   return db
     .execute(
-      `${SELECT_JOIN} WHERE u.username=? ORDER BY tw.createdAt DESC LIMIT ${lim} OFFSET ${off}`,
+      `${buildQuery(userId, 'WHERE u.username=?')} ORDER BY tw.createdAt DESC LIMIT ${lim} OFFSET ${off}`,
       [username],
     )
     .then(([rows]) => rows);
 }
 
-export async function getById(id) {
+export async function getById(id, userId = 0) {
   return db
-    .execute(`${SELECT_JOIN} WHERE tw.id=?`, [id])
+    .execute(`${buildQuery(userId, 'WHERE tw.id=?')} ORDER BY tw.createdAt DESC`, [id])
     .then(([rows]) => rows[0]);
 }
 

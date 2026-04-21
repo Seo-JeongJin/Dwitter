@@ -1,6 +1,7 @@
 import express from 'express';
 import { body } from 'express-validator';
 import * as tweetController from '../controller/tweet.js';
+import * as likeController from '../controller/like.js';
 import { isAuth } from '../middleware/auth.js'; // 트윗 조작 전에 사용자의 로그인 여부를 확인하기 위해 가져옴
 import { validate } from '../middleware/validator.js';
 
@@ -35,6 +36,9 @@ router.put('/:id', isAuth, validateTweet, tweetController.updateTweet);
 // DELETE /tweets/:id -> 특정 트윗 삭제
 // 삭제는 별도로 body에 text를 보내지 않으므로 내용 검증(validateTweet)은 뺐고, 로그인 권한(isAuth)만 확인
 router.delete('/:id', isAuth, tweetController.deleteTweet);
+
+router.post('/:id/likes', isAuth, likeController.likeTweet);
+router.delete('/:id/likes', isAuth, likeController.unlikeTweet);
 
 export default router;
 

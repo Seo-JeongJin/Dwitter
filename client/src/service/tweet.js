@@ -38,6 +38,20 @@ export default class TweetService {
     });
   }
 
+  async likeTweet(tweetId) {
+    return this.http.fetch(`/tweets/${tweetId}/likes`, {
+      method: 'POST',
+      headers: this.getHeaders(),
+    });
+  }
+
+  async unlikeTweet(tweetId) {
+    return this.http.fetch(`/tweets/${tweetId}/likes`, {
+      method: 'DELETE',
+      headers: this.getHeaders(),
+    });
+  }
+
   getHeaders() {
     const token = this.tokenStorage.getToken();
     return {

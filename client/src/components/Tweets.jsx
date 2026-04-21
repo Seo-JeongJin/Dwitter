@@ -91,6 +91,17 @@ const Tweets = memo(({ tweetService, username, addable, channel }) => {
       )
       .catch(onError);
 
+  const onLike = (tweetId, isLiked) => {
+    const action = isLiked ? tweetService.unlikeTweet(tweetId) : tweetService.likeTweet(tweetId);
+    action
+      .then(({ likeCount }) =>
+        setTweets((prev) =>
+          prev.map((t) => (t.id === tweetId ? { ...t, likeCount, isLiked: !isLiked } : t)),
+        ),
+      )
+      .catch(onError);
+  };
+
   const onUsernameClick = (tweet) => navigate(`/${tweet.username}`);
 
   return (
@@ -112,6 +123,7 @@ const Tweets = memo(({ tweetService, username, addable, channel }) => {
               onDelete={onDelete}
               onUpdate={onUpdate}
               onUsernameClick={onUsernameClick}
+              onLike={onLike}
             />
           ))}
           {loading && <li className="tweets-loading">불러오는 중...</li>}

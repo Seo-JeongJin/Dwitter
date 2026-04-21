@@ -347,3 +347,37 @@ button {
   margin-left: 8px;
   background: var(--color-red);
 }
+
+@keyframes like-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.5); }
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+.tweet-like-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 1rem;
+  padding: 2px 4px;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+.tweet-like-btn.like-pop {
+  animation: like-pop 300ms ease;
+}
+
+.heart-filled {
+  color: #ff6b9d;
+}
+
+.heart-empty {
+  color: #ff6b9d;
+}
+
+.like-count {
+  font-size: 0.8rem;
+  color: var(--color-darkGrey);
+}
