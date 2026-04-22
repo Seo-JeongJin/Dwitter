@@ -15,7 +15,7 @@ export async function signup(req, res) {
   // 1. 이미 존재하는 아이디인지 확인
   const found = await userRepository.findByUsername(username);
   if (found) {
-    return res.status(409).json({ message: `${username} already exists` }); // 이미 있다면 409(Conflict) 에러
+    return res.status(409).json({ message: `이미 사용 중인 아이디입니다` }); // 이미 있다면 409(Conflict) 에러
   }
 
   // 2. 비밀번호를 암호화
@@ -40,13 +40,13 @@ export async function login(req, res) {
   // 1. 입력받은 아이디로 유저를 찾음
   const user = await userRepository.findByUsername(username);
   if (!user) {
-    return res.status(401).json({ message: 'Invalid user or password' }); // 없으면 401 에러. (보안상 아이디가 틀렸는지 비번이 틀렸는지는 모호하게 알려주는 것이 좋음)
+    return res.status(401).json({ message: '아이디 또는 비밀번호가 올바르지 않습니다' }); // 없으면 401 에러. (보안상 아이디가 틀렸는지 비번이 틀렸는지는 모호하게 알려주는 것이 좋음)
   }
 
   // 2. 유저가 있다면, 입력한 비밀번호와 DB의 암호화된 비밀번호가 짝이 맞는지 비교
   const isValidPassword = await bcrypt.compare(password, user.password);
   if (!isValidPassword) {
-    return res.status(401).json({ message: 'Invalid user or password' }); // 틀리면 에러
+    return res.status(401).json({ message: '아이디 또는 비밀번호가 올바르지 않습니다' }); // 틀리면 에러
   }
 
   // 3. 비밀번호까지 맞다면 토큰을 발급하고 로그인에 성공
@@ -67,7 +67,7 @@ export async function me(req, res, next) {
   // 앞선 auth 미들웨어(isAuth)가 토큰을 검증하고 req.userId를 넣어두었으므로, 여기서 바로 꺼내 쓸 수 있음
   const user = await userRepository.findById(req.userId);
   if (!user) {
-    return res.status(404).json({ message: 'User not found' });
+    return res.status(404).json({ message: '사용자를 찾을 수 없습니다' });
   }
   // 유효한 유저라면 정상적으로 정보를 응답 (단, req.token은 미들웨어에서 넘겨주지 않았다면 undefined일 수 있으니 확인이 필요)
   res.status(200).json({ token: req.token, username: user.username });

@@ -19,7 +19,7 @@ const NewTweetForm = ({ tweetService, onError, channel }) => {
     <form className="tweet-form" onSubmit={onSubmit}>
       <input
         type="text"
-        placeholder="Edit your tweet"
+        placeholder="글 작성..."
         value={tweet}
         required
         autoFocus
@@ -27,7 +27,7 @@ const NewTweetForm = ({ tweetService, onError, channel }) => {
         className="form-input tweet-input"
       />
       <button type="submit" className="form-btn">
-        Post
+        게시
       </button>
     </form>
   );

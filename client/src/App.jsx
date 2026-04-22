@@ -12,7 +12,7 @@ function App({ tweetService }) {
   const { user, logout } = useAuth();
 
   const onLogout = () => {
-    if (window.confirm('Do you want to log out?')) {
+    if (window.confirm('로그아웃 하시겠습니까?')) {
       logout();
       navigate('/');
     }

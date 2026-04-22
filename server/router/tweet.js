@@ -13,7 +13,7 @@ const validateTweet = [
   body('text')
     .trim()
     .isLength({ min: 3 })
-    .withMessage('text should be at least 3 characters.'),
+    .withMessage('글 내용은 3자 이상이어야 합니다'),
   validate,
 ];
 

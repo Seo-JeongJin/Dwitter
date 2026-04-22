@@ -21,7 +21,7 @@ export async function getTweet(req, res, next) {
   if (tweet) {
     res.status(200).json(tweet); // 트윗이 존재하면 응답
   } else {
-    res.status(404).json({ message: `Tweet id(${id}) not found` }); // 없으면 404(Not Found) 에러
+    res.status(404).json({ message: `글을 찾을 수 없습니다 (id: ${id})` }); // 없으면 404(Not Found) 에러
   }
 }
 
@@ -41,7 +41,7 @@ export async function updateTweet(req, res, next) {
   // 무작정 수정하지 않고, 일단 해당 트윗이 존재하는지부터 찾음
   const tweet = await tweetRepository.getById(id);
   if (!tweet) {
-    return res.status(404).json({ message: `Tweet not found: ${id}` });
+    return res.status(404).json({ message: `글을 찾을 수 없습니다` });
   }
 
   // ★ 권한 검사: 트윗에 적힌 작성자 ID(tweet.userId)와 현재 로그인한 유저의 ID(req.userId)가 다르면
@@ -62,7 +62,7 @@ export async function deleteTweet(req, res, next) {
   // 수정과 동일하게, 존재하는지 먼저 확인
   const tweet = await tweetRepository.getById(id);
   if (!tweet) {
-    return res.status(404).json({ message: `Tweet not found: ${id}` });
+    return res.status(404).json({ message: `글을 찾을 수 없습니다` });
   }
 
   // ★ 권한 검사: 남의 트윗을 마음대로 지울 수 없도록 403 에러로 차단

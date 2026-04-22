@@ -190,7 +190,8 @@ button {
   font-size: 1.2rem;
   background: var(--color-blue);
   font-weight: bold;
-  padding: 4px;
+  padding: 4px 12px;
+  flex-shrink: 0;
 }
 
 .form-btn-small {

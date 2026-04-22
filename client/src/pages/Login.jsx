@@ -47,7 +47,7 @@ const Login = ({ onSignUp, onLogin }) => {
         <input
           name='username'
           type='text'
-          placeholder='Id'
+          placeholder='아이디'
           value={username}
           onChange={onChange}
           className='form-input'
@@ -56,7 +56,7 @@ const Login = ({ onSignUp, onLogin }) => {
         <input
           name='password'
           type='password'
-          placeholder='Password'
+          placeholder='비밀번호'
           value={password}
           className='form-input'
           onChange={onChange}
@@ -65,7 +65,7 @@ const Login = ({ onSignUp, onLogin }) => {
           <input
             name='name'
             type='text'
-            placeholder='Name'
+            placeholder='닉네임'
             value={name}
             onChange={onChange}
             className='form-input'
@@ -80,10 +80,10 @@ const Login = ({ onSignUp, onLogin }) => {
             onChange={onChange}
             checked={signup}
           />
-          <label htmlFor='signup'> Create a new account?</label>
+          <label htmlFor='signup'> 회원가입</label>
         </div>
         <button className='form-btn auth-form-btn' type='submit'>
-          {signup ? 'Sign Up' : 'Sign In'}
+          {signup ? '회원가입' : '로그인'}
         </button>
       </form>
     </>

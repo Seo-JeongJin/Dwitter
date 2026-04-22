@@ -17,7 +17,7 @@ const EditTweetForm = ({ tweet, onUpdate, onClose }) => {
     <form className="edit-tweet-form" onSubmit={onSubmit}>
       <input
         type="text"
-        placeholder="Edit your tweet"
+        placeholder="글 수정..."
         value={text}
         required
         autoFocus
@@ -26,10 +26,10 @@ const EditTweetForm = ({ tweet, onUpdate, onClose }) => {
       />
       <div className="edit-tweet-form-action">
         <button type="submit" className="form-btn-update">
-          Update
+          수정
         </button>
         <button type="button" className="form-btn-cancel" onClick={onClose}>
-          Cancel
+          취소
         </button>
       </div>
     </form>

@@ -3,7 +3,7 @@ import * as userRepository from '../data/auth.js'; // DB(또는 메모리)에서
 import { config } from '../config.js';
 
 // 인증 실패 시 클라이언트에게 일관되게 보내줄 에러 메시지 객체를 미리 정의
-const AUTH_ERROR = { message: 'Authentication Error' };
+const AUTH_ERROR = { message: '인증 오류입니다' };
 
 // 외부에서 이 인증 미들웨어를 사용할 수 있도록 export
 export const isAuth = async (req, res, next) => {

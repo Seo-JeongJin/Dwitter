@@ -3,38 +3,37 @@ export default function parseDate(tdate) {
   const now = new Date();
   const diff = Math.floor((now - created) / 1000);
   if (diff <= 1) {
-    return 'just now';
+    return '방금 전';
   }
   if (diff < 20) {
-    return diff + ' seconds ago';
+    return diff + '초 전';
   }
   if (diff < 40) {
-    return 'half a minute ago';
+    return '30초 전';
   }
   if (diff < 60) {
-    return 'less than a minute ago';
+    return '1분 미만';
   }
   if (diff <= 90) {
-    return 'one minute ago';
+    return '1분 전';
   }
   if (diff <= 3540) {
-    return Math.round(diff / 60) + ' minutes ago';
+    return Math.round(diff / 60) + '분 전';
   }
   if (diff <= 5400) {
-    return '1 hour ago';
+    return '1시간 전';
   }
   if (diff <= 86400) {
-    return Math.round(diff / 3600) + ' hours ago';
+    return Math.round(diff / 3600) + '시간 전';
   }
   if (diff <= 129600) {
-    return '1 day ago';
+    return '1일 전';
   }
   if (diff < 604800) {
-    return Math.round(diff / 86400) + ' days ago';
+    return Math.round(diff / 86400) + '일 전';
   }
   if (diff <= 777600) {
-    return '1 week ago';
+    return '1주 전';
   }
-  const month = created.toLocaleDateString('default', { month: 'long' });
-  return `on ${month} ${created.getDate()}`;
+  return `${created.getMonth() + 1}월 ${created.getDate()}일`;
 }

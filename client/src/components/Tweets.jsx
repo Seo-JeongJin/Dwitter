@@ -112,7 +112,7 @@ const Tweets = memo(({ tweetService, username, addable, channel }) => {
       <div className="tweets-scroll" onScroll={handleScroll}>
         {error && <Banner text={error} isAlert={true} />}
         {tweets.length === 0 && !loading && (
-          <p className="tweets-empty">No Tweets Yet</p>
+          <p className="tweets-empty">게시글이 없습니다</p>
         )}
         <ul className="tweets">
           {tweets.map((tweet) => (
