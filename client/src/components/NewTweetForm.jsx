@@ -1,32 +1,54 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 const NewTweetForm = ({ tweetService, onError, channel }) => {
   const [tweet, setTweet] = useState('');
+  const textareaRef = useRef(null);
+  const submittingRef = useRef(false);
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
+  const submit = () => {
+    if (!tweet.trim() || submittingRef.current) return;
+    submittingRef.current = true;
     tweetService
       .postTweet(tweet, channel)
-      .then(() => setTweet(''))
-      .catch(onError);
+      .then(() => {
+        setTweet('');
+        if (textareaRef.current) {
+          textareaRef.current.style.height = 'auto';
+        }
+      })
+      .catch(onError)
+      .finally(() => {
+        submittingRef.current = false;
+      });
   };
 
-  const onChange = (event) => {
-    setTweet(event.target.value);
+  const onKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      submit();
+    }
+  };
+
+  const onChange = (e) => {
+    setTweet(e.target.value);
+    e.target.style.height = 'auto';
+    e.target.style.height = e.target.scrollHeight + 'px';
   };
 
   return (
-    <form className="tweet-form" onSubmit={onSubmit}>
-      <input
-        type="text"
-        placeholder="글 작성..."
+    <form className="tweet-form" onSubmit={(e) => e.preventDefault()}>
+      <textarea
+        placeholder="글을 작성해보세요. (Shift + Enter 로 개행)"
         value={tweet}
         required
         autoFocus
+        ref={textareaRef}
+        rows={1}
         onChange={onChange}
+        onKeyDown={onKeyDown}
         className="form-input tweet-input"
       />
-      <button type="submit" className="form-btn">
+      <button type="button" className="form-btn" onClick={submit}>
         게시
       </button>
     </form>
