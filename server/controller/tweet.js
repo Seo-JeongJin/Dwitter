@@ -39,7 +39,7 @@ export async function updateTweet(req, res, next) {
   const text = req.body.text;
 
   // 무작정 수정하지 않고, 일단 해당 트윗이 존재하는지부터 찾음
-  const tweet = await tweetRepository.getById(id);
+  const tweet = await tweetRepository.getById(id, req.userId);
   if (!tweet) {
     return res.status(404).json({ message: `글을 찾을 수 없습니다` });
   }
@@ -51,7 +51,7 @@ export async function updateTweet(req, res, next) {
   }
 
   // 모든 검사를 통과했을 때만 업데이트를 진행
-  const updated = await tweetRepository.update(id, text);
+  const updated = await tweetRepository.update(id, text, req.userId);
   res.status(200).json(updated);
 }
 

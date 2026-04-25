@@ -205,6 +205,7 @@ button {
 .form-input {
   font-size: 1rem;
   margin: 4px 0;
+  font-family: inherit;
 }
 
 .form-input:focus {
@@ -313,12 +314,16 @@ button {
 .tweet-input {
   width: 100%;
   margin-right: 4px;
+  resize: none;
+  overflow: hidden;
+  line-height: 1.4;
 }
 
 .tweet-action {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 4px;
 }
 
 .tweet-action-btn {
@@ -397,4 +402,111 @@ button {
 
 .bookmark-empty {
   color: #f5a623;
+}
+
+.tweet-footer {
+  margin-top: 4px;
+}
+
+.comment-toggle-btn {
+  font-size: 0.8rem;
+  color: var(--color-darkGrey);
+  padding: 2px 0;
+}
+
+.comment-toggle-btn:hover {
+  color: var(--color-blue);
+}
+
+.comments {
+  margin-top: 8px;
+  border-top: 1px solid var(--color-grey);
+  padding-top: 8px;
+}
+
+.comment-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px 0;
+}
+
+.comment-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 0;
+  color: var(--color-black);
+  border-bottom: 1px solid var(--color-grey);
+}
+
+.comment-item:last-child {
+  border-bottom: none;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+}
+
+.comment-author {
+  font-weight: bold;
+}
+
+.comment-username {
+  font-size: 0.75rem;
+  color: var(--color-blue);
+  font-weight: bold;
+  cursor: pointer;
+  transition: 200ms;
+}
+
+.comment-username:hover {
+  background: var(--color-yellow);
+}
+
+.comment-date {
+  font-size: 0.7rem;
+  color: var(--color-darkGrey);
+}
+
+.comment-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding-left: 4px;
+}
+
+.comment-text {
+  flex: 1;
+  font-size: 0.85rem;
+}
+
+.comment-delete-btn {
+  font-size: 0.75rem;
+  color: var(--color-darkGrey);
+  flex-shrink: 0;
+}
+
+.comment-form {
+  display: flex;
+  gap: 4px;
+}
+
+.comment-input {
+  flex: 1;
+  font-size: 0.85rem;
+  padding: 3px 6px;
+  resize: none;
+  overflow: hidden;
+  line-height: 1.4;
+  font-family: inherit;
+}
+
+.comment-submit-btn {
+  font-size: 0.85rem;
+  background: var(--color-blue);
+  padding: 3px 8px;
+  flex-shrink: 0;
 }

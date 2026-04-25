@@ -3,6 +3,7 @@ import { body } from 'express-validator';
 import * as tweetController from '../controller/tweet.js';
 import * as likeController from '../controller/like.js';
 import * as bookmarkController from '../controller/bookmark.js';
+import * as commentController from '../controller/comment.js';
 import { isAuth } from '../middleware/auth.js'; // 트윗 조작 전에 사용자의 로그인 여부를 확인하기 위해 가져옴
 import { validate } from '../middleware/validator.js';
 
@@ -46,6 +47,10 @@ router.delete('/:id/likes', isAuth, likeController.unlikeTweet);
 
 router.post('/:id/bookmarks', isAuth, bookmarkController.bookmarkTweet);
 router.delete('/:id/bookmarks', isAuth, bookmarkController.unbookmarkTweet);
+
+router.get('/:tweetId/comments', isAuth, commentController.getComments);
+router.post('/:tweetId/comments', isAuth, commentController.addComment);
+router.delete('/:tweetId/comments/:commentId', isAuth, commentController.deleteComment);
 
 export default router;
 

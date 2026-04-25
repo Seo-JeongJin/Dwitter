@@ -117,6 +117,11 @@ const Tweets = memo(({ tweetService, username, addable, channel, bookmarksOnly }
       .catch(onError);
   };
 
+  const onCommentChange = (tweetId, delta) =>
+    setTweets((prev) =>
+      prev.map((t) => (t.id === tweetId ? { ...t, commentCount: (t.commentCount || 0) + delta } : t)),
+    );
+
   const onUsernameClick = (tweet) => navigate(`/${tweet.username}`);
 
   return (
@@ -140,6 +145,8 @@ const Tweets = memo(({ tweetService, username, addable, channel, bookmarksOnly }
               onUsernameClick={onUsernameClick}
               onLike={onLike}
               onBookmark={onBookmark}
+              tweetService={tweetService}
+              onCommentChange={onCommentChange}
             />
           ))}
           {loading && <li className="tweets-loading">불러오는 중...</li>}

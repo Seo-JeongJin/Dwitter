@@ -3,9 +3,10 @@ import { db } from '../db/database.js';
 const buildQuery = (userId, where = '') => `
   SELECT tw.id, tw.text, tw.createdAt, tw.userId, tw.channel,
          u.name, u.username,
-         COUNT(l.id) AS likeCount,
+         COUNT(DISTINCT l.id) AS likeCount,
          EXISTS(SELECT 1 FROM likes WHERE userId=${parseInt(userId) || 0} AND tweetId=tw.id) AS isLiked,
-         EXISTS(SELECT 1 FROM bookmarks WHERE userId=${parseInt(userId) || 0} AND tweetId=tw.id) AS isBookmarked
+         EXISTS(SELECT 1 FROM bookmarks WHERE userId=${parseInt(userId) || 0} AND tweetId=tw.id) AS isBookmarked,
+         (SELECT COUNT(*) FROM comments WHERE tweetId=tw.id) AS commentCount
   FROM tweets tw
   JOIN users u ON tw.userId = u.id
   LEFT JOIN likes l ON l.tweetId = tw.id
@@ -66,10 +67,10 @@ export async function create(text, userId, channel = 'general') {
     .then(([result]) => getById(result.insertId));
 }
 
-export async function update(id, text) {
+export async function update(id, text, userId = 0) {
   return db
     .execute('UPDATE tweets SET text=? WHERE id=?', [text, id])
-    .then(() => getById(id));
+    .then(() => getById(id, userId));
 }
 
 export async function remove(id) {

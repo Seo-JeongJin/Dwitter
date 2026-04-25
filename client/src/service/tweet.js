@@ -74,6 +74,28 @@ export default class TweetService {
     });
   }
 
+  async getComments(tweetId) {
+    return this.http.fetch(`/tweets/${tweetId}/comments`, {
+      method: 'GET',
+      headers: this.getHeaders(),
+    });
+  }
+
+  async addComment(tweetId, text) {
+    return this.http.fetch(`/tweets/${tweetId}/comments`, {
+      method: 'POST',
+      headers: { ...this.getHeaders(), 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text }),
+    });
+  }
+
+  async deleteComment(tweetId, commentId) {
+    return this.http.fetch(`/tweets/${tweetId}/comments/${commentId}`, {
+      method: 'DELETE',
+      headers: this.getHeaders(),
+    });
+  }
+
   getHeaders() {
     const token = this.tokenStorage.getToken();
     return {

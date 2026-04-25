@@ -3,13 +3,15 @@ import { FaHeart, FaRegHeart, FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import parseDate from '../util/date';
 import Avatar from './Avatar';
 import EditTweetForm from './EditTweetForm';
+import Comments from './Comments';
 
 const TweetCard = memo(
-  ({ tweet, owner, onDelete, onUpdate, onUsernameClick, onLike, onBookmark }) => {
-    const { id, username, name, text, createdAt, likeCount = 0, isLiked = false, isBookmarked = false } = tweet;
+  ({ tweet, owner, onDelete, onUpdate, onUsernameClick, onLike, onBookmark, tweetService, onCommentChange }) => {
+    const { id, username, name, text, createdAt, likeCount = 0, isLiked = false, isBookmarked = false, commentCount = 0 } = tweet;
     const [editing, setEditing] = useState(false);
     const [animating, setAnimating] = useState(false);
     const [bookmarkAnimating, setBookmarkAnimating] = useState(false);
+    const [showComments, setShowComments] = useState(false);
     const onClose = () => setEditing(false);
 
     const handleLike = () => {
@@ -64,18 +66,33 @@ const TweetCard = memo(
                 onClose={onClose}
               />
             )}
+            <div className="tweet-footer">
+              <button
+                className="comment-toggle-btn"
+                onClick={() => setShowComments((v) => !v)}
+              >
+                댓글 보기({commentCount})
+              </button>
+            </div>
+            {showComments && (
+              <Comments
+                tweetId={id}
+                tweetService={tweetService}
+                onCountChange={(delta) => onCommentChange(id, delta)}
+              />
+            )}
           </div>
         </section>
         {owner && (
           <div className="tweet-action">
-            <button className="tweet-action-btn" onClick={() => onDelete(id)}>
-              x
-            </button>
             <button
               className="tweet-action-btn"
               onClick={() => setEditing(true)}
             >
               ✎
+            </button>
+            <button className="tweet-action-btn" onClick={() => onDelete(id)}>
+              x
             </button>
           </div>
         )}
