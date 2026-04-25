@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 
 const LIMIT = 20;
 
-const Tweets = memo(({ tweetService, username, addable, channel }) => {
+const Tweets = memo(({ tweetService, username, addable, channel, bookmarksOnly }) => {
   const [tweets, setTweets] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -33,8 +33,10 @@ const Tweets = memo(({ tweetService, username, addable, channel }) => {
       if (loadingRef.current || !hasMoreRef.current) return;
       loadingRef.current = true;
       setLoading(true);
-      tweetService
-        .getTweets(username, channel, LIMIT, offset)
+      const fetchFn = bookmarksOnly
+        ? tweetService.getBookmarks(LIMIT, offset)
+        : tweetService.getTweets(username, channel, LIMIT, offset);
+      fetchFn
         .then((data) => {
           setTweets((prev) => (offset === 0 ? data : [...prev, ...data]));
           offsetRef.current = offset + data.length;
@@ -46,7 +48,7 @@ const Tweets = memo(({ tweetService, username, addable, channel }) => {
           setLoading(false);
         });
     },
-    [tweetService, username, channel, onError],
+    [tweetService, username, channel, bookmarksOnly, onError],
   );
 
   useEffect(() => {
@@ -91,6 +93,19 @@ const Tweets = memo(({ tweetService, username, addable, channel }) => {
       )
       .catch(onError);
 
+  const onBookmark = (tweetId, isBookmarked) => {
+    const action = isBookmarked
+      ? tweetService.unbookmarkTweet(tweetId)
+      : tweetService.bookmarkTweet(tweetId);
+    action
+      .then(() =>
+        setTweets((prev) =>
+          prev.map((t) => (t.id === tweetId ? { ...t, isBookmarked: !isBookmarked } : t)),
+        ),
+      )
+      .catch(onError);
+  };
+
   const onLike = (tweetId, isLiked) => {
     const action = isLiked ? tweetService.unlikeTweet(tweetId) : tweetService.likeTweet(tweetId);
     action
@@ -124,6 +139,7 @@ const Tweets = memo(({ tweetService, username, addable, channel }) => {
               onUpdate={onUpdate}
               onUsernameClick={onUsernameClick}
               onLike={onLike}
+              onBookmark={onBookmark}
             />
           ))}
           {loading && <li className="tweets-loading">불러오는 중...</li>}

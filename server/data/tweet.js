@@ -4,7 +4,8 @@ const buildQuery = (userId, where = '') => `
   SELECT tw.id, tw.text, tw.createdAt, tw.userId, tw.channel,
          u.name, u.username,
          COUNT(l.id) AS likeCount,
-         EXISTS(SELECT 1 FROM likes WHERE userId=${parseInt(userId) || 0} AND tweetId=tw.id) AS isLiked
+         EXISTS(SELECT 1 FROM likes WHERE userId=${parseInt(userId) || 0} AND tweetId=tw.id) AS isLiked,
+         EXISTS(SELECT 1 FROM bookmarks WHERE userId=${parseInt(userId) || 0} AND tweetId=tw.id) AS isBookmarked
   FROM tweets tw
   JOIN users u ON tw.userId = u.id
   LEFT JOIN likes l ON l.tweetId = tw.id
@@ -43,6 +44,17 @@ export async function getById(id, userId = 0) {
   return db
     .execute(`${buildQuery(userId, 'WHERE tw.id=?')} ORDER BY tw.createdAt DESC`, [id])
     .then(([rows]) => rows[0]);
+}
+
+export async function getBookmarked(userId, limit, offset) {
+  const lim = parseInt(limit) || 20;
+  const off = parseInt(offset) || 0;
+  return db
+    .execute(
+      `${buildQuery(userId, 'JOIN bookmarks b ON b.tweetId = tw.id WHERE b.userId=?')} ORDER BY tw.createdAt DESC LIMIT ${lim} OFFSET ${off}`,
+      [userId],
+    )
+    .then(([rows]) => rows);
 }
 
 export async function create(text, userId, channel = 'general') {

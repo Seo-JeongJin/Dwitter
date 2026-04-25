@@ -27,7 +27,7 @@ function App({ tweetService }) {
           <Routes>
             <Route path='/' element={<AllTweets tweetService={tweetService} />} />
             <Route path='/channel/:channel' element={<ChannelTweets tweetService={tweetService} />} />
-            <Route path='/bookmarks' element={<Bookmarks />} />
+            <Route path='/bookmarks' element={<Bookmarks tweetService={tweetService} />} />
             <Route path='/:username' element={<MyTweets tweetService={tweetService} />} />
           </Routes>
         </main>

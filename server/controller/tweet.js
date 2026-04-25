@@ -55,6 +55,14 @@ export async function updateTweet(req, res, next) {
   res.status(200).json(updated);
 }
 
+// 즐겨찾기한 트윗 목록 가져오기
+export async function getBookmarks(req, res) {
+  const limit = Math.max(1, parseInt(req.query.limit, 10) || 20);
+  const offset = Math.max(0, parseInt(req.query.offset, 10) || 0);
+  const data = await tweetRepository.getBookmarked(req.userId, limit, offset);
+  res.status(200).json(data);
+}
+
 // 트윗 삭제하기
 export async function deleteTweet(req, res, next) {
   const id = req.params.id;

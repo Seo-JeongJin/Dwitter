@@ -1,5 +1,7 @@
-const Bookmarks = () => (
-  <p className="tweets-empty">즐겨찾기한 글이 없습니다.</p>
+import Tweets from '../components/Tweets';
+
+const Bookmarks = ({ tweetService }) => (
+  <Tweets tweetService={tweetService} bookmarksOnly={true} addable={false} />
 );
 
 export default Bookmarks;

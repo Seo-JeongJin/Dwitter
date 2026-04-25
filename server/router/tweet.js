@@ -2,6 +2,7 @@ import express from 'express';
 import { body } from 'express-validator';
 import * as tweetController from '../controller/tweet.js';
 import * as likeController from '../controller/like.js';
+import * as bookmarkController from '../controller/bookmark.js';
 import { isAuth } from '../middleware/auth.js'; // 트윗 조작 전에 사용자의 로그인 여부를 확인하기 위해 가져옴
 import { validate } from '../middleware/validator.js';
 
@@ -22,6 +23,9 @@ const validateTweet = [
 // isAuth 미들웨어가 먼저 실행되어, 로그인한 사용자만 트윗 목록을 볼 수 있게 흐름을 제어
 router.get('/', isAuth, tweetController.getTweets); // 함수를 호출하면 안됨, 값이 연결되는게 아니라 함수를 연결해주어야 함
 
+// GET /tweets/bookmarks -> /:id 보다 먼저 등록해야 'bookmarks'가 id로 오인되지 않음
+router.get('/bookmarks', isAuth, tweetController.getBookmarks);
+
 // GET /tweets/:id -> 특정 트윗 하나만 상세히 보고싶을 때
 // 마찬가지로 토큰 인증(isAuth)을 거친 후에만 컨트롤러에 접근할 수 있음
 router.get('/:id', isAuth, tweetController.getTweet);
@@ -39,6 +43,9 @@ router.delete('/:id', isAuth, tweetController.deleteTweet);
 
 router.post('/:id/likes', isAuth, likeController.likeTweet);
 router.delete('/:id/likes', isAuth, likeController.unlikeTweet);
+
+router.post('/:id/bookmarks', isAuth, bookmarkController.bookmarkTweet);
+router.delete('/:id/bookmarks', isAuth, bookmarkController.unbookmarkTweet);
 
 export default router;
 

@@ -382,3 +382,19 @@ button {
   font-size: 0.8rem;
   color: var(--color-darkGrey);
 }
+
+.tweet-bookmark-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 4px;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.bookmark-filled {
+  color: #f5a623;
+}
+
+.bookmark-empty {
+  color: #f5a623;
+}

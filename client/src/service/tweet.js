@@ -38,6 +38,28 @@ export default class TweetService {
     });
   }
 
+  async getBookmarks(limit = 20, offset = 0) {
+    const params = new URLSearchParams({ limit, offset });
+    return this.http.fetch(`/tweets/bookmarks?${params.toString()}`, {
+      method: 'GET',
+      headers: this.getHeaders(),
+    });
+  }
+
+  async bookmarkTweet(tweetId) {
+    return this.http.fetch(`/tweets/${tweetId}/bookmarks`, {
+      method: 'POST',
+      headers: this.getHeaders(),
+    });
+  }
+
+  async unbookmarkTweet(tweetId) {
+    return this.http.fetch(`/tweets/${tweetId}/bookmarks`, {
+      method: 'DELETE',
+      headers: this.getHeaders(),
+    });
+  }
+
   async likeTweet(tweetId) {
     return this.http.fetch(`/tweets/${tweetId}/likes`, {
       method: 'POST',

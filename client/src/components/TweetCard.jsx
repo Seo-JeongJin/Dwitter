@@ -1,19 +1,25 @@
 import { memo, useState } from 'react';
-import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import parseDate from '../util/date';
 import Avatar from './Avatar';
 import EditTweetForm from './EditTweetForm';
 
 const TweetCard = memo(
-  ({ tweet, owner, onDelete, onUpdate, onUsernameClick, onLike }) => {
-    const { id, username, name, text, createdAt, likeCount = 0, isLiked = false } = tweet;
+  ({ tweet, owner, onDelete, onUpdate, onUsernameClick, onLike, onBookmark }) => {
+    const { id, username, name, text, createdAt, likeCount = 0, isLiked = false, isBookmarked = false } = tweet;
     const [editing, setEditing] = useState(false);
     const [animating, setAnimating] = useState(false);
+    const [bookmarkAnimating, setBookmarkAnimating] = useState(false);
     const onClose = () => setEditing(false);
 
     const handleLike = () => {
       setAnimating(true);
       onLike(id, !!isLiked);
+    };
+
+    const handleBookmark = () => {
+      setBookmarkAnimating(true);
+      onBookmark(id, !!isBookmarked);
     };
 
     return (
@@ -39,6 +45,15 @@ const TweetCard = memo(
                   ? <FaHeart className="heart-filled" />
                   : <FaRegHeart className="heart-empty" />}
                 <span className="like-count">{likeCount > 0 ? likeCount : ''}</span>
+              </button>
+              <button
+                className={`tweet-bookmark-btn${bookmarkAnimating ? ' like-pop' : ''}`}
+                onClick={handleBookmark}
+                onAnimationEnd={() => setBookmarkAnimating(false)}
+              >
+                {isBookmarked
+                  ? <FaBookmark className="bookmark-filled" />
+                  : <FaRegBookmark className="bookmark-empty" />}
               </button>
             </div>
             <p>{text}</p>
