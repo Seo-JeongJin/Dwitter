@@ -28,6 +28,11 @@ export async function getTweet(req, res, next) {
 // 새로운 트윗 생성하기
 export async function createTweet(req, res, next) {
   const { text, channel } = req.body;
+
+  if (channel === 'notice' && req.userRole !== 'admin') {
+    return res.status(403).json({ message: '공지사항은 관리자만 작성할 수 있습니다' });
+  }
+
   const tweet = await tweetRepository.create(text, req.userId, channel || 'general');
   res.status(201).json(tweet); // 데이터가 새로 생성되었으므로 201 상태 코드를 보냄
   getSocketIO().emit('tweets', tweet);

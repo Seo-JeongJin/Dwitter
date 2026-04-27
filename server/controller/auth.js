@@ -30,7 +30,7 @@ export async function signup(req, res) {
 
   // 4. 가입 성공과 동시에 로그인 상태를 만들어주기 위해 JWT 토큰을 발급
   const token = createJwtToken(userId);
-  res.status(201).json({ token, username }); // 201(Created) 응답과 함께 토큰을 클라이언트에 내려줌
+  res.status(201).json({ token, username, role: 'user' });
 }
 
 // 로그인 처리를 담당하는 함수
@@ -51,7 +51,7 @@ export async function login(req, res) {
 
   // 3. 비밀번호까지 맞다면 토큰을 발급하고 로그인에 성공
   const token = createJwtToken(user.id);
-  res.status(200).json({ token, username });
+  res.status(200).json({ token, username, role: user.role });
 }
 
 // 내부적으로 토큰 발급을 재사용하기 위해 만든 헬퍼(Helper) 함수
@@ -70,5 +70,5 @@ export async function me(req, res, next) {
     return res.status(404).json({ message: '사용자를 찾을 수 없습니다' });
   }
   // 유효한 유저라면 정상적으로 정보를 응답 (단, req.token은 미들웨어에서 넘겨주지 않았다면 undefined일 수 있으니 확인이 필요)
-  res.status(200).json({ token: req.token, username: user.username });
+  res.status(200).json({ token: req.token, username: user.username, role: user.role });
 }

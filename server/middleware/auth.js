@@ -41,7 +41,8 @@ export const isAuth = async (req, res, next) => {
 
       // 5. 모든 검증을 완벽하게 통과함!
       // 다음 미들웨어나 컨트롤러에서 이 유저가 누군지 바로 알 수 있도록, 요청(req) 객체에 'userId'라는 이름으로 직접 데이터를 달아줌
-      req.userId = user.id; // req.customData 역할을 함
+      req.userId = user.id;
+      req.userRole = user.role;
 
       // 6. 현재 미들웨어의 역할은 끝났으니, 다음 목적지(컨트롤러 등)로 무사히 넘어가라고 문을 열어줌
       next();
