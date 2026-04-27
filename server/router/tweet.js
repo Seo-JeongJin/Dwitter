@@ -11,11 +11,25 @@ const router = express.Router();
 
 // 트윗 생성 및 수정 시 클라이언트가 보낸 텍스트 내용을 검증하는 로직
 // ✅ isLength에서 실패 → 바로 응답 안 함 → 에러를 내부에 저장 → 마지막 validate에서 한꺼번에 확인 → 에러 응답
+const VALID_CHANNELS = ['notice', 'general', 'jobs', 'exam', 'class'];
+
 const validateTweet = [
   body('text')
     .trim()
     .isLength({ min: 3 })
     .withMessage('글 내용은 3자 이상이어야 합니다'),
+  body('channel')
+    .optional()
+    .isIn(VALID_CHANNELS)
+    .withMessage('유효하지 않은 채널입니다'),
+  validate,
+];
+
+const validateComment = [
+  body('text')
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage('댓글 내용을 입력해주세요'),
   validate,
 ];
 
@@ -49,7 +63,7 @@ router.post('/:id/bookmarks', isAuth, bookmarkController.bookmarkTweet);
 router.delete('/:id/bookmarks', isAuth, bookmarkController.unbookmarkTweet);
 
 router.get('/:tweetId/comments', isAuth, commentController.getComments);
-router.post('/:tweetId/comments', isAuth, commentController.addComment);
+router.post('/:tweetId/comments', isAuth, validateComment, commentController.addComment);
 router.delete('/:tweetId/comments/:commentId', isAuth, commentController.deleteComment);
 
 export default router;
