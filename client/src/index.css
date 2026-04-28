@@ -1,34 +1,50 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+
 :root {
-  --color-white: #f9fafa;
-  --color-black: #141518;
-  --color-blue: #1a9ff0;
-  --color-darkBlue: #073d5d;
-  --color-grey: #dee0e0;
-  --color-darkGrey: #969696;
-  --color-red: #cc473d;
-  --color-green: #7aa300;
-  --color-yellow: #fff6b0;
-  --color-shadow: rgba(0, 0, 0, 0.2);
+  --color-white: #f0f2f5;
+  --color-black: #1a2332;
+  --color-blue: #4d9de0;
+  --color-darkBlue: #243044;
+  --color-grey: #3a4556;
+  --color-darkGrey: #7a8a99;
+  --color-red: #ff453a;
+  --color-green: #30d158;
+  --color-yellow: #ffd60a;
+  --color-shadow: rgba(0, 0, 0, 0.4);
   --size-avatar: 38px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --transition: 150ms ease;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--color-darkBlue);
+  background: url('/img/background.jpg') center/cover fixed;
+  position: relative;
   display: flex;
   justify-content: center;
-  margin: 0;
   color: var(--color-white);
 }
 
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 0;
+}
+
+.app {
+  position: relative;
+  z-index: 1;
+}
+
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 * {
@@ -39,7 +55,7 @@ button {
   background-color: transparent;
   outline: 0;
   border: 0;
-  color: var(--color-white);
+  color: inherit;
   cursor: pointer;
 }
 
@@ -47,10 +63,10 @@ button {
   width: 100vw;
   max-width: 900px;
   height: 100vh;
-  background-color: var(--color-white);
+  background-color: #141d2b;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 5px 30px 0 rgb(0 0 0 / 20%), 0 5px 20px 0 rgb(0 0 0 / 19%);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
 }
 
 .app-login {
@@ -63,36 +79,45 @@ button {
   overflow: hidden;
 }
 
+/* ── 사이드바 ── */
 .sidebar {
   width: 180px;
   min-width: 180px;
-  background-color: var(--color-darkBlue);
+  background-color: #112240;
   display: flex;
   flex-direction: column;
-  padding: 12px 0;
+  padding: 12px 8px;
   border-right: 1px solid var(--color-grey);
 }
 
 .sidebar-item {
-  padding: 10px 16px;
-  color: var(--color-white);
+  padding: 9px 12px;
+  color: var(--color-darkGrey);
   text-decoration: none;
   font-size: 0.9rem;
-  cursor: pointer;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), color var(--transition);
 }
 
-.sidebar-item:hover,
+.sidebar-item:hover {
+  background-color: var(--color-darkBlue);
+  color: var(--color-white);
+}
+
 .sidebar-item.active {
   background-color: var(--color-blue);
+  color: var(--color-white);
+  font-weight: 600;
 }
 
 .sidebar-divider {
   height: 1px;
   background-color: var(--color-grey);
-  margin: 8px 0;
-  opacity: 0.3;
+  margin: 6px 0;
 }
 
+/* ── 메인 ── */
 .main-content {
   flex: 1;
   overflow: hidden;
@@ -104,44 +129,52 @@ button {
   flex: 1;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-blue) var(--color-darkGrey);
+  scrollbar-color: var(--color-grey) transparent;
 }
 
 .tweets-scroll::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .tweets-scroll::-webkit-scrollbar-thumb {
-  background-color: var(--color-blue);
+  background-color: var(--color-grey);
+  border-radius: 999px;
 }
 
+/* ── 헤더 ── */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--color-black);
-  padding: 8px;
+  background-color: #112240;
+  padding: 0 16px;
+  height: 56px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--color-grey);
 }
 
 .logo {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   cursor: pointer;
 }
 
 .logo-img {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
 }
 
 .logo-name {
-  font-size: 2rem;
-  margin: 8px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 8px;
+  letter-spacing: -0.5px;
+  color: var(--color-white);
 }
 
 .logo-user {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--color-blue);
 }
 
@@ -149,7 +182,6 @@ button {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: var(--color-white);
 }
 
 .header-user {
@@ -159,16 +191,29 @@ button {
 }
 
 .menu-item {
-  color: var(--color-white);
-  font-weight: bold;
-  font-size: 1rem;
+  color: var(--color-darkGrey);
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-grey);
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
 }
 
+.menu-item:hover {
+  background: var(--color-darkBlue);
+  color: var(--color-white);
+  border-color: var(--color-darkGrey);
+}
+
+/* ── 배너 ── */
 .banner {
   margin: 8px;
-  padding: 8px;
-  font-size: 1rem;
-  font-weight: bold;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  color: var(--color-white);
 }
 
 .banner-red {
@@ -179,23 +224,36 @@ button {
   background-color: var(--color-green);
 }
 
+/* ── 인증 폼 ── */
 .auth-form {
   display: flex;
   flex-direction: column;
-  color: var(--color-black);
+  color: var(--color-white);
   padding: 16px 32px;
 }
 
 .form-btn {
-  font-size: 1.2rem;
+  font-size: 1rem;
   background: var(--color-blue);
-  font-weight: bold;
-  padding: 4px 12px;
+  color: var(--color-white);
+  font-weight: 600;
+  padding: 8px 16px;
   flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  transition: filter var(--transition), transform var(--transition);
+}
+
+.form-btn:hover {
+  filter: brightness(1.1);
+}
+
+.form-btn:active {
+  transform: scale(0.97);
 }
 
 .form-btn-small {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  padding: 5px 10px;
 }
 
 .auth-form-btn {
@@ -206,18 +264,26 @@ button {
   font-size: 1rem;
   margin: 4px 0;
   font-family: inherit;
+  padding: 8px 10px;
+  border: 1.5px solid var(--color-grey);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color var(--transition);
+  color: var(--color-white);
+  background: var(--color-darkBlue);
 }
 
 .form-input:focus {
-  outline: 2px dotted var(--color-blue);
+  border-color: var(--color-blue);
 }
 
 .form-signup {
   margin-top: 8px;
 }
 
+/* ── 트윗 목록 ── */
 .tweets {
-  color: var(--color-black);
+  color: var(--color-white);
   padding: 16px;
   list-style: none;
   margin: 0;
@@ -232,23 +298,30 @@ button {
 }
 
 .tweets-empty {
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 1.4rem;
+  font-weight: 600;
   color: var(--color-grey);
   text-align: center;
+  margin-top: 48px;
 }
 
+/* ── 트윗 카드 ── */
 .tweet {
-  box-shadow: 0 4px 8px 0 var(--color-shadow);
-  transition: 0.3s;
-  margin-bottom: 16px;
-  padding: 8px;
+  border: 1px solid var(--color-grey);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 8px var(--color-shadow);
+  transition: box-shadow var(--transition), transform var(--transition);
+  margin-bottom: 12px;
+  padding: 12px;
   display: flex;
   justify-content: space-between;
+  background: var(--color-darkBlue);
 }
 
 .tweet:hover {
-  box-shadow: 0 8px 16px 0 var(--color-shadow);
+  box-shadow: 0 6px 20px var(--color-shadow);
+  transform: translateY(-1px);
+  border-color: #555;
 }
 
 .tweet-container {
@@ -265,60 +338,83 @@ button {
 .avatar-txt {
   width: var(--size-avatar);
   height: var(--size-avatar);
-  background-color: var(--color-grey);
+  background-color: var(--color-darkBlue);
+  border: 2px solid var(--color-blue);
   border-radius: 50%;
   text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  line-height: var(--size-avatar);
-  color: var(--color-black);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: calc(var(--size-avatar) - 4px);
+  color: var(--color-blue);
+  flex-shrink: 0;
 }
+
 .tweet-body {
-  margin: 0px 8px;
+  margin: 0 8px;
   width: 100%;
 }
 
 .tweet-name {
   font-size: 0.9rem;
-  font-weight: bold;
+  font-weight: 700;
+  color: var(--color-white);
 }
 
 .tweet-username,
 .tweet-date {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   margin-left: 4px;
   color: var(--color-blue);
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .tweet-username {
   cursor: pointer;
-  transition: 200ms;
+  transition: color var(--transition);
+  border-radius: 3px;
 }
 
 .tweet-username:hover {
-  background: var(--color-yellow);
+  color: #6ab0e8;
 }
 
 .tweet-date {
   color: var(--color-darkGrey);
+  font-weight: 400;
 }
 
+/* ── 글 작성 폼 ── */
 .tweet-form {
   display: flex;
   width: 100%;
-  padding: 4px 16px;
-  background-color: var(--color-grey);
+  padding: 10px 16px;
+  background-color: #243b5e;
+  border-bottom: 1px solid var(--color-grey);
+  gap: 8px;
+  align-items: center;
 }
 
 .tweet-input {
-  width: 100%;
-  margin-right: 4px;
+  flex: 1;
   resize: none;
   overflow: hidden;
-  line-height: 1.4;
+  line-height: 1.5;
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 6px 10px;
+  border: 1.5px solid var(--color-grey);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color var(--transition);
+  color: var(--color-white);
+  background: var(--color-darkBlue);
 }
 
+.tweet-input:focus {
+  border-color: var(--color-blue);
+}
+
+/* ── 트윗 액션 (수정/삭제) ── */
 .tweet-action {
   display: flex;
   flex-direction: row;
@@ -327,33 +423,55 @@ button {
 }
 
 .tweet-action-btn {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: var(--color-blue);
-  transition: transform 300ms;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-darkGrey);
+  padding: 3px 6px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), color var(--transition);
 }
 
-.tweet-delete:hover {
-  transform: scale(1.5);
+.tweet-action-btn:hover {
+  background: var(--color-grey);
+  color: var(--color-white);
 }
 
 .edit-tweet-form-action {
   float: right;
-  margin-top: 4px;
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
 }
 
 .form-btn-update,
 .form-btn-cancel {
   font-size: 0.8rem;
-  background: var(--color-blue);
-  font-weight: bold;
-  padding: 4px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  color: var(--color-white);
+  transition: filter var(--transition), transform var(--transition);
 }
+
+.form-btn-update {
+  background: var(--color-blue);
+}
+
 .form-btn-cancel {
-  margin-left: 8px;
   background: var(--color-red);
 }
 
+.form-btn-update:hover,
+.form-btn-cancel:hover {
+  filter: brightness(1.1);
+}
+
+.form-btn-update:active,
+.form-btn-cancel:active {
+  transform: scale(0.97);
+}
+
+/* ── 좋아요 애니메이션 ── */
 @keyframes like-pop {
   0%   { transform: scale(1); }
   40%  { transform: scale(1.5); }
@@ -366,9 +484,15 @@ button {
   align-items: center;
   gap: 3px;
   font-size: 1rem;
-  padding: 2px 4px;
+  padding: 2px 6px;
   vertical-align: middle;
-  margin-left: 8px;
+  margin-left: 6px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition);
+}
+
+.tweet-like-btn:hover {
+  background: rgba(255, 69, 58, 0.15);
 }
 
 .tweet-like-btn.like-pop {
@@ -376,11 +500,11 @@ button {
 }
 
 .heart-filled {
-  color: #ff6b9d;
+  color: #ff453a;
 }
 
 .heart-empty {
-  color: #ff6b9d;
+  color: #ff453a;
 }
 
 .like-count {
@@ -391,9 +515,15 @@ button {
 .tweet-bookmark-btn {
   display: inline-flex;
   align-items: center;
-  padding: 2px 4px;
+  padding: 2px 6px;
   vertical-align: middle;
-  margin-left: 4px;
+  margin-left: 2px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition);
+}
+
+.tweet-bookmark-btn:hover {
+  background: rgba(245, 166, 35, 0.15);
 }
 
 .bookmark-filled {
@@ -404,38 +534,61 @@ button {
   color: #f5a623;
 }
 
+/* ── 채널 뱃지 ── */
+.channel-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(58, 143, 212, 0.2);
+  color: var(--color-blue);
+  margin-bottom: 4px;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.channel-badge:hover {
+  background: rgba(58, 143, 212, 0.35);
+}
+
+/* ── 댓글 토글 ── */
 .tweet-footer {
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .comment-toggle-btn {
   font-size: 0.8rem;
   color: var(--color-darkGrey);
-  padding: 2px 0;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), color var(--transition);
 }
 
 .comment-toggle-btn:hover {
-  color: var(--color-blue);
+  background: var(--color-grey);
+  color: var(--color-white);
 }
 
+/* ── 댓글 영역 ── */
 .comments {
-  margin-top: 8px;
+  margin-top: 10px;
   border-top: 1px solid var(--color-grey);
-  padding-top: 8px;
+  padding-top: 10px;
 }
 
 .comment-list {
   list-style: none;
   padding: 0;
-  margin: 0 0 8px 0;
+  margin: 0 0 10px 0;
 }
 
 .comment-item {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding: 6px 0;
-  color: var(--color-black);
+  padding: 7px 0;
+  color: var(--color-white);
   border-bottom: 1px solid var(--color-grey);
 }
 
@@ -451,19 +604,20 @@ button {
 }
 
 .comment-author {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .comment-username {
   font-size: 0.75rem;
   color: var(--color-blue);
-  font-weight: bold;
+  font-weight: 500;
   cursor: pointer;
-  transition: 200ms;
+  border-radius: 3px;
+  transition: color var(--transition);
 }
 
 .comment-username:hover {
-  background: var(--color-yellow);
+  color: #6ab0e8;
 }
 
 .comment-date {
@@ -481,32 +635,63 @@ button {
 .comment-text {
   flex: 1;
   font-size: 0.85rem;
+  line-height: 1.5;
 }
 
 .comment-delete-btn {
   font-size: 0.75rem;
   color: var(--color-darkGrey);
   flex-shrink: 0;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), color var(--transition);
+}
+
+.comment-delete-btn:hover {
+  background: rgba(255, 69, 58, 0.15);
+  color: var(--color-red);
 }
 
 .comment-form {
   display: flex;
-  gap: 4px;
+  gap: 6px;
 }
 
 .comment-input {
   flex: 1;
   font-size: 0.85rem;
-  padding: 3px 6px;
+  padding: 6px 10px;
   resize: none;
   overflow: hidden;
   line-height: 1.4;
   font-family: inherit;
+  border: 1.5px solid var(--color-grey);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color var(--transition);
+  color: var(--color-white);
+  background: var(--color-black);
+}
+
+.comment-input:focus {
+  border-color: var(--color-blue);
 }
 
 .comment-submit-btn {
   font-size: 0.85rem;
+  font-weight: 600;
   background: var(--color-blue);
-  padding: 3px 8px;
+  color: var(--color-white);
+  padding: 6px 12px;
   flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  transition: filter var(--transition), transform var(--transition);
+}
+
+.comment-submit-btn:hover {
+  filter: brightness(1.1);
+}
+
+.comment-submit-btn:active {
+  transform: scale(0.97);
 }
