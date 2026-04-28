@@ -38,6 +38,14 @@ export default class TweetService {
     });
   }
 
+  async getPopular(limit = 20, offset = 0) {
+    const params = new URLSearchParams({ limit, offset });
+    return this.http.fetch(`/tweets/popular?${params.toString()}`, {
+      method: 'GET',
+      headers: this.getHeaders(),
+    });
+  }
+
   async getBookmarks(limit = 20, offset = 0) {
     const params = new URLSearchParams({ limit, offset });
     return this.http.fetch(`/tweets/bookmarks?${params.toString()}`, {

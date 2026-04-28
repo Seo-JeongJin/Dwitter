@@ -5,6 +5,7 @@ import AllTweets from './pages/AllTweets';
 import MyTweets from './pages/MyTweets';
 import ChannelTweets from './pages/ChannelTweets';
 import Bookmarks from './pages/Bookmarks';
+import Popular from './pages/Popular';
 import { useAuth } from './context/AuthContext';
 
 function App({ tweetService }) {
@@ -28,6 +29,7 @@ function App({ tweetService }) {
             <Route path='/' element={<AllTweets tweetService={tweetService} />} />
             <Route path='/channel/:channel' element={<ChannelTweets tweetService={tweetService} />} />
             <Route path='/bookmarks' element={<Bookmarks tweetService={tweetService} />} />
+            <Route path='/popular' element={<Popular tweetService={tweetService} />} />
             <Route path='/:username' element={<MyTweets tweetService={tweetService} />} />
           </Routes>
         </main>

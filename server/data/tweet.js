@@ -47,6 +47,16 @@ export async function getById(id, userId = 0) {
     .then(([rows]) => rows[0]);
 }
 
+export async function getPopular(limit, offset, userId) {
+  const lim = parseInt(limit) || 20;
+  const off = parseInt(offset) || 0;
+  return db
+    .execute(
+      `${buildQuery(userId)} HAVING likeCount >= 3 ORDER BY likeCount DESC, tw.createdAt DESC LIMIT ${lim} OFFSET ${off}`,
+    )
+    .then(([rows]) => rows);
+}
+
 export async function getBookmarked(userId, limit, offset) {
   const lim = parseInt(limit) || 20;
   const off = parseInt(offset) || 0;

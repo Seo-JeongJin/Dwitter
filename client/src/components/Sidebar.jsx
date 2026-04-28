@@ -33,6 +33,13 @@ const Sidebar = () => {
       ))}
       <div className="sidebar-divider" />
       <NavLink
+        to="/popular"
+        className={({ isActive }) => (isActive ? 'sidebar-item active' : 'sidebar-item')}
+      >
+        인기글
+      </NavLink>
+      <div className="sidebar-divider" />
+      <NavLink
         to="/bookmarks"
         className={({ isActive }) => (isActive ? 'sidebar-item active' : 'sidebar-item')}
       >

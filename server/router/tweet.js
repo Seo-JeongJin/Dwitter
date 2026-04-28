@@ -41,6 +41,9 @@ router.get('/', isAuth, tweetController.getTweets); // 함수를 호출하면 �
 // GET /tweets/bookmarks -> /:id 보다 먼저 등록해야 'bookmarks'가 id로 오인되지 않음
 router.get('/bookmarks', isAuth, tweetController.getBookmarks);
 
+// GET /tweets/popular -> 좋아요 3개 이상 인기글
+router.get('/popular', isAuth, tweetController.getPopularTweets);
+
 // GET /tweets/:id -> 특정 트윗 하나만 상세히 보고싶을 때
 // 마찬가지로 토큰 인증(isAuth)을 거친 후에만 컨트롤러에 접근할 수 있음
 router.get('/:id', isAuth, tweetController.getTweet);
