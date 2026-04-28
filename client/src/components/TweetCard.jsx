@@ -1,13 +1,23 @@
 import { memo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaHeart, FaRegHeart, FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import parseDate from '../util/date';
 import Avatar from './Avatar';
 import EditTweetForm from './EditTweetForm';
 import Comments from './Comments';
 
+const CHANNEL_LABELS = {
+  notice: '공지사항',
+  general: '잡담',
+  jobs: '취업',
+  exam: '시험',
+  class: '수업',
+};
+
 const TweetCard = memo(
-  ({ tweet, owner, onDelete, onUpdate, onUsernameClick, onLike, onBookmark, tweetService, onCommentChange }) => {
-    const { id, username, name, text, createdAt, likeCount = 0, isLiked = false, isBookmarked = false, commentCount = 0 } = tweet;
+  ({ tweet, owner, onDelete, onUpdate, onUsernameClick, onLike, onBookmark, tweetService, onCommentChange, showBadge }) => {
+    const { id, username, name, text, createdAt, likeCount = 0, isLiked = false, isBookmarked = false, commentCount = 0, channel } = tweet;
+    const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
     const [animating, setAnimating] = useState(false);
     const [bookmarkAnimating, setBookmarkAnimating] = useState(false);
@@ -58,6 +68,11 @@ const TweetCard = memo(
                   : <FaRegBookmark className="bookmark-empty" />}
               </button>
             </div>
+            {showBadge && channel && (
+              <span className="channel-badge" onClick={() => navigate(`/channel/${channel}`)}>
+                {CHANNEL_LABELS[channel] ?? channel}
+              </span>
+            )}
             <p>{text}</p>
             {editing && (
               <EditTweetForm

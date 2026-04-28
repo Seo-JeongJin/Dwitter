@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 
 const LIMIT = 20;
 
-const Tweets = memo(({ tweetService, username, addable, channel, bookmarksOnly }) => {
+const Tweets = memo(({ tweetService, username, addable, channel, bookmarksOnly, popularOnly }) => {
   const [tweets, setTweets] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -35,6 +35,8 @@ const Tweets = memo(({ tweetService, username, addable, channel, bookmarksOnly }
       setLoading(true);
       const fetchFn = bookmarksOnly
         ? tweetService.getBookmarks(LIMIT, offset)
+        : popularOnly
+        ? tweetService.getPopular(LIMIT, offset)
         : tweetService.getTweets(username, channel, LIMIT, offset);
       fetchFn
         .then((data) => {
@@ -48,7 +50,7 @@ const Tweets = memo(({ tweetService, username, addable, channel, bookmarksOnly }
           setLoading(false);
         });
     },
-    [tweetService, username, channel, bookmarksOnly, onError],
+    [tweetService, username, channel, bookmarksOnly, popularOnly, onError],
   );
 
   useEffect(() => {
@@ -58,7 +60,7 @@ const Tweets = memo(({ tweetService, username, addable, channel, bookmarksOnly }
     fetchTweets(0);
 
     const stopSync = tweetService.onSync((tweet) => {
-      if (!channel || tweet.channel === channel) {
+      if (!popularOnly && (!channel || tweet.channel === channel)) {
         setTweets((prev) => [tweet, ...prev]);
         offsetRef.current += 1;
       }
@@ -147,6 +149,7 @@ const Tweets = memo(({ tweetService, username, addable, channel, bookmarksOnly }
               onBookmark={onBookmark}
               tweetService={tweetService}
               onCommentChange={onCommentChange}
+              showBadge={!channel}
             />
           ))}
           {loading && <li className="tweets-loading">불러오는 중...</li>}
